@@ -7,14 +7,17 @@
 #include "stdio.h"
 
 void mark_start(PROCESS* p, SCHEDULER_STATS* stats, float time_started) {
-  // todo
+  stats->num_processes_started++;
+  stats->sum_of_response_time += (time_started - p->entry_time);
 }
 void mark_end(PROCESS* p, SCHEDULER_STATS* stats, float time_completed) {
-  // todo
+  stats->num_processes_completed++;
+  stats->sum_of_turnaround_times += (time_completed - p->entry_time);
 }
 
 void finalize_stats(SCHEDULER_STATS* stats) {
-  // todo
+  stats->average_response_time = (stats->sum_of_response_time / stats->num_processes_completed);
+  stats->average_turnaround_time = (stats->sum_of_turnaround_times / stats->num_processes_completed);
 }
 
 int compare_noop(PROCESS p1, PROCESS p2) {
@@ -77,42 +80,36 @@ int compare_last_run(PROCESS p1, PROCESS p2) {
 
 PROCESS* fifo_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_arrival_time);
   return p;
 }
 
 PROCESS* rr_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_last_run);
   return p;
 }
 
 PROCESS* sjf_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_job_duration);
   return p;
 }
 
 PROCESS* priority_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_priority);
   return p;
 }
 
 PROCESS* lifo_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_arrival_time_invert);
   return p;
 }
 
 PROCESS* stcf_process_selector(PROCESS_LIST* pl) {
   PROCESS *p;
-  // todo: what should be this next line?
   p = get_minimum(pl, compare_time_remaining);
   return p;
 }
